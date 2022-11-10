@@ -1,0 +1,105 @@
+create table users (
+id_user int PRIMARY KEY auto_increment,
+name varchar(40) NOT NULL,
+email varchar(40) NOT NULL unique,
+password varchar(20) NOT NULL unique
+);
+
+select * from users;
+
+create  table  posts(
+id_post int PRIMARY KEY auto_increment,
+title varchar(20),
+description text,
+id_user int,
+foreign key(id_user) REFERENCES users(id_user)
+);
+select * from posts;
+
+create  table  roles (
+id_role int PRIMARY KEY auto_increment,
+name varchar(16) NOT null
+);
+select * from roles;
+
+create  table  user_roles(
+id_user int,
+id_role int,
+FOREIGN key(id_user) REFERENCES users(id_user),
+FOREIGN key(id_role) REFERENCES roles(id_role)
+);
+
+insert  into  roles
+(name)
+values 
+("admin"),
+("employee"),
+("client");
+ 
+
+insert  into  users
+(name, email, password) VALUES
+("Maria Luiza", "marialuiza@gmail.com", "123456"),
+("Carlos Daniel", "daniel@gmail.com", "6789"),
+("Gislania", "gislania@gmail.com", "101112"),
+("Hellen Rayssa", "rayssa@gmail.com", "131415"),
+("Gabriel Abreu", "gabriel@gmail.com", "2469");
+select * from users;
+
+insert into posts (title, description, id_user) 
+values
+('html', 'eu amava, sinto saudades', 1),
+('javascript', 'nao gosto', 1),
+('css', 'eu amavaaa', 3),
+('react', 'sei nem pra onde vai',2),
+('portugol', 'unica coisa que realmente sabia',2),
+('quimica', 'preciso de ajuda', 3),
+('matematica', 'socorroooooo', 5),
+('biologia', 'ate que eu consigo entender', 5),
+('design', 'eu amoo', 4),
+('fisica', 'acho que estou bem', 4);
+
+
+insert  into  user_roles (id_user, id_role) values 
+('1', '1'),
+('2', '3'),
+('3', '2'),
+('4', '2'),
+('5', '3');
+
+select posts.id_post,
+posts.title,
+posts.description,
+posts.id_user,
+users.id_user,
+users.name from posts inner join users on posts.id_user= users.id_user
+WHERE users.id_user = 5;
+
+delete  from  posts 
+  where   id_user = 2;
+delete  from  user_roles
+  where  id_user = 2;
+delete  from  users
+  where  id_user = 2;
+ 
+ 
+ update posts
+ set title = 'Luiza linda',
+ description = 'ela merece'
+where id_post = 1;
+ 
+
+select 
+users.id_user,
+users.name,
+roles.name from  user_roles
+join  users on  user_roles.id_user = users.id_user
+join  roles on roles.id_role = user_roles.id_role
+where  roles.name = "Client";
+
+
+
+
+
+
+
